@@ -1,0 +1,91 @@
+Name:          bcg729
+Version:       1.0.2
+Release:       1%{?dist}
+Summary:       Opensource implementation of the G.729 codec
+
+# Incorrect FSF addresses: http://lists.nongnu.org/archive/html/linphone-developers/2016-07/msg00043.html
+License:       GPLv2+
+URL:           http://www.linphone.org/eng/documentation/dev/bcg729.html
+Source0:       http://download-mirror.savannah.gnu.org/releases/linphone/plugins/sources/%{name}-%{version}.tar.gz
+# Test data is not redistributible
+# Source1:       http://www.belledonne-communications.com/downloads/bcg729-patterns.zip
+
+BuildRequires: gcc
+
+
+%description
+bcg729 is an opensource implementation of both encoder and decoder of the
+ITU G729 Annex A speech codec.
+The library written in C 99 is fully portable and can be executed on many
+platforms including both ARM  processor and x86.
+bcg729 supports concurrent channels encoding/decoding for multi call
+application such conferencing.
+
+
+%package       devel
+Summary:       Development files for %{name}
+Requires:      %{name}%{?_isa} = %{version}-%{release}
+
+%description   devel
+Development files for %{name}.
+
+
+%prep
+%autosetup -p1
+# unzip -qq -d test %{SOURCE1}
+
+
+%build
+%configure --disable-silent-rules --disable-static
+%make_build
+
+
+%install
+%make_install
+find %{buildroot}%{_libdir} -type f -name '*.la' -delete -print
+
+%check
+# Test data is not redistributible
+# make check
+
+
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
+
+%files
+%doc AUTHORS README
+%license COPYING
+%{_libdir}/lib%{name}.so.*
+
+
+%files devel
+%{_includedir}/%{name}/
+%{_libdir}/lib%{name}.so
+%{_libdir}/pkgconfig/lib%{name}.pc
+
+
+%changelog
+* Fri Jan 06 2017 Sandro Mani <manisandro@gmail.com> - 1.0.2-1
+- Update to 1.0.2
+
+* Thu Jul 28 2016 Sandro Mani <manisandro@gmail.com> - 1.0.1-2
+- Remove OpenSSL BRs
+
+* Thu Jul 28 2016 Sandro Mani <manisandro@gmail.com> - 1.0.1-1
+- Update to 1.0.1
+
+* Thu Jul 28 2016 Dominik Mierzejewski <rpm@greysector.net> - 1.0.0-3
+- add test data, build (but don't install) static library and enable tests
+
+* Wed Jul 20 2016 Sandro Mani <manisandro@gmail.com> - 1.0.0-2
+- Move autoreconf to build
+- BR: pkgconfig(ortp)
+- License is GPLv2+
+- Change command to delete *.la files
+- Use %%name in %%files
+- Don't fix FSF addresses
+
+* Wed Jul 20 2016 Sandro Mani <manisandro@gmail.com> - 1.0.0-1
+- Initial package
