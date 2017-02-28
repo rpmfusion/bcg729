@@ -1,15 +1,15 @@
 Name:          bcg729
-Version:       1.0.2
+Version:       1.0.3
 Release:       1%{?dist}
 Summary:       Opensource implementation of the G.729 codec
 
-# Incorrect FSF addresses: http://lists.nongnu.org/archive/html/linphone-developers/2016-07/msg00043.html
 License:       GPLv2+
-URL:           http://www.linphone.org/eng/documentation/dev/bcg729.html
-Source0:       http://download-mirror.savannah.gnu.org/releases/linphone/plugins/sources/%{name}-%{version}.tar.gz
+URL:           https://github.com/BelledonneCommunications/bcg729
+Source0:       https://github.com/BelledonneCommunications/bcg729/archive/%{version}/%{name}-%{version}.tar.gz
 # Test data is not redistributible
 # Source1:       http://www.belledonne-communications.com/downloads/bcg729-patterns.zip
 
+BuildRequires: automake autoconf libtool
 BuildRequires: gcc
 
 
@@ -36,7 +36,8 @@ Development files for %{name}.
 
 
 %build
-%configure --disable-silent-rules --disable-static
+./autogen.sh
+%configure --disable-static
 %make_build
 
 
@@ -55,7 +56,7 @@ find %{buildroot}%{_libdir} -type f -name '*.la' -delete -print
 
 
 %files
-%doc AUTHORS README
+%doc AUTHORS README.md
 %license COPYING
 %{_libdir}/lib%{name}.so.*
 
@@ -67,6 +68,9 @@ find %{buildroot}%{_libdir} -type f -name '*.la' -delete -print
 
 
 %changelog
+* Tue Feb 28 2017 Sandro Mani <manisandro@gmail.com> - 1.0.3-1
+- Update to 1.0.3
+
 * Fri Jan 06 2017 Sandro Mani <manisandro@gmail.com> - 1.0.2-1
 - Update to 1.0.2
 
