@@ -1,6 +1,6 @@
 Name:          bcg729
-Version:       1.0.3
-Release:       2%{?dist}
+Version:       1.0.4
+Release:       1%{?dist}
 Summary:       Opensource implementation of the G.729 codec
 
 License:       GPLv2+
@@ -68,6 +68,9 @@ find %{buildroot}%{_libdir} -type f -name '*.la' -delete -print
 
 
 %changelog
+* Thu Jul 27 2017 Sandro Mani <manisandro@gmail.com> - 1.0.4-1
+- Update to 1.0.4
+
 * Sat Mar 18 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 1.0.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
